@@ -196,16 +196,116 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 
 **Preguntas**
 
-* ¿Cuáles son los tipos de balanceadores de carga en Azure y en qué se diferencian?, ¿Qué es SKU, qué tipos hay y en qué se diferencian?, ¿Por qué el balanceador de carga necesita una IP pública?
-* ¿Cuál es el propósito del *Backend Pool*?
-* ¿Cuál es el propósito del *Health Probe*?
-* ¿Cuál es el propósito de la *Load Balancing Rule*? ¿Qué tipos de sesión persistente existen, por qué esto es importante y cómo puede afectar la escalabilidad del sistema?.
-* ¿Qué es una *Virtual Network*? ¿Qué es una *Subnet*? ¿Para qué sirven los *address space* y *address range*?
-* ¿Qué son las *Availability Zone* y por qué seleccionamos 3 diferentes zonas?. ¿Qué significa que una IP sea *zone-redundant*?
-* ¿Cuál es el propósito del *Network Security Group*?
-* Informe de newman 1 (Punto 2)
-* Presente el Diagrama de Despliegue de la solución.
+* **¿Cuáles son los tipos de balanceadores de carga en Azure y en qué se diferencian?**
 
+   Azure Load Balancer puede configurarse como un balanceador interno o público:
 
+   **Interno: Tendrá una IP privada y no será accesible desde Internet. Igual que en el público, las peticiones que lleguen a la IP del frontend se distribuirán entre las máquinas del backend.**
+   - Uso frecuente para equilibrar el tráfico procedente de direcciones IP privadas.
+   - Se utiliza cuando se necesitan IPs privadas sólo en el frontend. 
+   - Los balanceadores de carga internos (o privados) se utilizan para equilibrar la carga del tráfico dentro de una red virtual. Se puede acceder a un balanceador de carga frontend desde una red local en un escenario híbrido.
 
+   **Público : Tendrá una IP pública en el frontend en la que recibirá peticiones que repartirá entre las máquinas del backend.**
+   - Uso frecuente para equilibrar el tráfico procedente de direcciones IP públicas.
+   - Tiene la capacidad de proporcionar conexiones salientes para máquinas virtuales (VM) dentro de su red virtual. Estas conexiones se realizan traduciendo sus direcciones IP privadas a direcciones IP públicas. 
+   - Los balanceadores de carga públicos se utilizan para equilibrar la carga del tráfico de Internet a sus máquinas virtuales.
 
+* **¿Qué es SKU, qué tipos hay y en qué se diferencian?**
+
+   **SKU (Stock Keeping Unit)** podemos seleccionar entre Básico y Estándar. Cualquier configuración que podamos hacer con un Load Balancer Básico también la podemos hacer con un Load Balancer Estándar, pero este último incluye algunas características que no estén en el básico:
+   - Hasta 1.000 instancias de máquinas virtuales en el backend frente a 100 que permite como máximo el básico.
+   - Sondas de salud TCP, HTTP y HTTPS, mientras que el básico sólo permite sondas de tipo TCP y HTTP, pero no HTTPS.
+   - Uso de zonas de disponibilidad, lo que no es posible en el básico.
+
+   **Standard**
+   - El balanceador de carga estándar se basa en el modelo de seguridad de red de confianza cero.
+   - El balanceador de carga estándar es seguro por defecto y forma parte de su red virtual. La red virtual es una red privada y aislada.
+   - Los balanceadores de carga estándar y las direcciones IP públicas estándar están cerrados a las conexiones entrantes a menos que se abran mediante Grupos de Seguridad de Red. Los NSG se utilizan para permitir explícitamente el tráfico permitido. Si no tiene un NSG en una subred o NIC de su recurso de máquina virtual, no se permite que el tráfico llegue a este recurso. 
+
+   **Basic:** El balanceador de carga básico está abierto a Internet por defecto.
+
+* **¿Por qué el balanceador de carga necesita una IP pública?**
+
+   Las máquinas virtuales se conectan al backend del balanceador de carga y la dirección **IP pública** se asigna al frontend. También implementa el servicio de NAT. El NAT inverso recibe la petición en la IP pública y la redirige a la máquina que el algoritmo considere como óptima en cada momento.
+
+   - Se utilizará en la configuración de la IP del frontend.
+   - Para acceder a las máquinas virtuales en una red virtual por dirección IP pública y puerto.
+
+* **¿Cuál es el propósito del *Backend Pool*?**
+
+   **Propósito: Contiene las direcciones IP de las máquinas virtuales (NICs) conectadas al balanceador de carga.**
+   
+   Definir el grupo de recursos que servirá el tráfico para una determinada regla de balanceo de carga. Si se configura un pool de backend por Tarjeta de interfaz de red (NIC); este método crea el vínculo más directo entre su recurso y el conjunto de backend.
+
+* **¿Cuál es el propósito del *Health Probe*?**
+
+   **Propósito: Supervisar el estado de su aplicación.**
+   
+   Se configura un Health Probe que el balanceador de carga puede utilizar para determinar si su instancia está en buen estado. Si su instancia falla en su Health Probe suficientes veces, dejará de recibir tráfico hasta que empiece a pasar Health Probe de nuevo.
+
+   Es decir, se usan para detectar el fallo de una aplicación en un endpoint del backend; Las respuestas de Health Probe determinan qué instancias del backend pool recibirán nuevos flujos.
+
+* **¿Cuál es el propósito de la *Load Balancing Rule*?**
+
+   **Propósito: Definir cómo se distribuye el tráfico a las máquinas virtuales dentro del pool de backend.**
+   
+   Se define la configuración de IP del frontend para el tráfico entrante y el pool de IP del backend para recibir el tráfico. El puerto de origen y destino se definen en la regla.
+
+* **¿Qué tipos de sesión persistente existen, por qué esto es importante y cómo puede afectar la escalabilidad del sistema?.**
+
+   Podríamos aplicar persistencia a la sesión, de forma que un cliente siempre sería dirigido a la misma máquina del backend. Las opciones de persistencia son:
+
+   ![](images/part2/persistenceSession.png)
+
+   - **Ninguno:** Sucesivas peticiones de un mismo cliente podrían ser atendidas por máquinas diferentes del backend.
+   - **IP del cliente:** Todas las peticiones que procedan de una misma IP de origen serás atendidas por la misma máquina del backend.
+   - **IP y protocolo del cliente:** Todas las peticiones que procedan de una misma IP y puerto de origen serán atendidas por la misma máquina del backend, pero si vienen de la misma IP pero con un puerto de origen diferente podrían ser atendidas por otra máquina del backend.
+
+   Cuando se habla del equilibrio de carga, ‘persistencia’ se refiere a la información que se transfiere a través de múltiples solicitudes durante la sesión de un usuario.
+
+   Parte de la información de la sesión se almacena en el navegador; artículos agregados a la cesta de la compra de un usuario en un sitio de comercio electrónico, por ejemplo. Pero cuando la información de la sesión se almacena en el servidor, por ejemplo, cuando el usuario procede al pago e inicia sesión en su cuenta, la persistencia se vuelve un poco más complicada.
+   
+   Si las solicitudes de un usuario se conectan inicialmente a un servidor que almacena información de sesión localmente, pero las solicitudes posteriores van a otros servidores en el clúster, la información de la sesión ya no estará disponible.
+
+   Esto afecta a la disponibilidad y el rendimiento del sistema.
+
+* **¿Qué es una *Virtual Network*? ¿Qué es una *Subnet*? ¿Para qué sirven los *address space* y *address range*?**
+
+   **Azure Virtual Network (VNet)** es el bloque de construcción fundamental para su red privada en Azure. VNet permite que muchos tipos de recursos de Azure, como las máquinas virtuales (VM) de Azure, se comuniquen de forma segura entre sí, con Internet y con las redes locales. VNet es similar a una red tradicional que operaría en su propio centro de datos, pero trae consigo beneficios adicionales de la infraestructura de Azure, como la escala, la disponibilidad y el aislamiento.
+
+   The Virtual Network de Azure permite que los recursos de Azure se comuniquen de forma segura entre sí, con Internet y con las redes locales. Los escenarios clave que puede lograr con una red virtual incluyen: la comunicación de los recursos de Azure con Internet, la comunicación entre los recursos de Azure, la comunicación con los recursos locales, el filtrado del tráfico de red, el enrutamiento del tráfico de red y la integración con los servicios de Azure.
+
+   Una **Subnet** es un rango de direcciones IP en la VNet. Se puede dividir una VNet en varias subnets para su organización y seguridad. Cada NIC en una VM está conectada a una subred en una VNet. Las NICs conectadas a subredes (iguales o diferentes) dentro de una VNet pueden comunicarse entre sí sin ninguna configuración adicional.
+
+   **Address space** de una red virtual se compone de uno o varios rangos de direcciones no superpuestos que se especifican en notación CIDR.
+   **Address range** debe ser especificado en notación CIDR, y no puede superponerse con otros rangos de direcciones dentro de la misma red virtual o Subnet.
+
+* **¿Qué son las *Availability Zone* y por qué seleccionamos 3 diferentes zonas?.** 
+
+   Una **Availability Zone** es una oferta de alta disponibilidad que protege sus aplicaciones y datos de los fallos del centro de datos. Las zonas de disponibilidad son ubicaciones físicas únicas dentro de una región de Azure. Cada zona se compone de uno o más centros de datos equipados con energía, refrigeración y redes independientes. Para garantizar la resistencia, hay un mínimo de tres zonas separadas en todas las regiones habilitadas. La separación física de las zonas de disponibilidad dentro de una región protege las aplicaciones y los datos de los fallos del centro de datos. 
+
+* **¿Qué significa que una IP sea *zone-redundant*?**
+
+   Los servicios de **zone-redundant** replican sus aplicaciones y datos a través de las zonas de disponibilidad para protegerlos de los puntos únicos de fallo. Con las zonas de disponibilidad, Azure ofrece el mejor acuerdo de nivel de servicio (SLA) del sector con un 99,99% de tiempo de actividad de las máquinas. El SLA completo de Azure explica la disponibilidad garantizada de Azure en su conjunto.
+
+   Las puertas de enlace de **zone-redundant** y las puertas de enlace de zona se basan en el recurso de IP pública de Azure SKU estándar. La configuración del recurso de IP pública de Azure determina si la puerta de enlace que implementa es redundante por zonas o zonal.
+
+* **¿Cuál es el propósito del *Network Security Group*?**
+
+   **Propósito: Línea de defensa en la seguridad de nuestros recursos en Azure.**
+   - Filtra el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure. 
+   - Contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante hacia, o el tráfico de red saliente desde, varios tipos de recursos de Azure.
+
+* **Informe de newman 1 (Punto 2)**
+* **Presente el Diagrama de Despliegue de la solución.**
+
+**Fuentes:**
+   - https://azurebrains.com/2019/02/07/azure-load-balancer/
+   - https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview
+   - https://docs.microsoft.com/en-us/azure/load-balancer/backend-pool-management
+   - https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-custom-probe-overview
+   - https://docs.microsoft.com/en-us/azure/load-balancer/quickstart-load-balancer-standard-public-portal?tabs=option-1-create-load-balancer-standard
+   - https://www.hostdime.com.ar/blog/por-que-usar-un-equilibrador-de-carga-o-load-balancer/
+   - https://docs.microsoft.com/en-us/azure/vpn-gateway/about-zone-redundant-vnet-gateways
+   - https://www.azurebrains.com/2019/01/08/network-security-groups/
+   - https://docs.microsoft.com/en-us/azure/virtual-network/network-security-group-how-it-works
