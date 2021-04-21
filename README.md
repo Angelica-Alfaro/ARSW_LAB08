@@ -314,11 +314,7 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 **Fuentes:**
 
 - https://azurebrains.com/2019/02/07/azure-load-balancer/
-- https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview
-- https://docs.microsoft.com/en-us/azure/load-balancer/backend-pool-management
-- https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-custom-probe-overview
-- https://docs.microsoft.com/en-us/azure/load-balancer/quickstart-load-balancer-standard-public-portal?tabs=option-1-create-load-balancer-standard
+- https://docs.microsoft.com/en-us/azure/load-balancer/
 - https://www.hostdime.com.ar/blog/por-que-usar-un-equilibrador-de-carga-o-load-balancer/
 - https://docs.microsoft.com/en-us/azure/vpn-gateway/about-zone-redundant-vnet-gateways
-- https://www.azurebrains.com/2019/01/08/network-security-groups/
 - https://docs.microsoft.com/en-us/azure/virtual-network/network-security-group-how-it-works
