@@ -100,9 +100,18 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     </body>
 </html>
 
-**Preguntas**
+**🔎 Preguntas**
 
-1. ¿Cuántos y cuáles recursos crea Azure junto con la VM?
+1. **¿Cuántos y cuáles recursos crea Azure junto con la VM?**
+
+Junto con la máquina virtual,Azure crea 6 recursos:
+   * Azure Storage Account
+   * Public IP Address
+   * Network Interface
+   * Virtual Network
+   * Virtual Disks
+   * Network Security Group
+  
 2. ¿Brevemente describa para qué sirve cada recurso?
 3. ¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un _Inbound port rule_ antes de acceder al servicio?
 4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.
@@ -200,7 +209,7 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
 ```
 
-**Preguntas**
+**🔎 Preguntas**
 
 1. **¿Cuáles son los tipos de balanceadores de carga en Azure y en qué se diferencian?**
 
