@@ -78,7 +78,7 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 11. Una vez el cambio se vea reflejado, repita el paso 7, 8 y 9.
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
 
-- Usando este modelo de escalabilidad logramos reducir el consumo de CPU y tiempo de respuesta a las peticiones evidenciadas en la consola del browser; sin embargo aún falla nuestro servicio pues no responde con éxito a un conjunto considerable de peticiones concurrentes.
+      Usando este modelo de escalabilidad logramos reducir el consumo de CPU y tiempo de respuesta a las peticiones evidenciadas en la consola del browser; sin embargo aún falla nuestro servicio pues no responde con éxito a un conjunto considerable de peticiones concurrentes.
 
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
@@ -296,16 +296,16 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 
 10. **¿Qué significa que una IP sea _zone-redundant_?**
 
-Los servicios de **zone-redundant** replican sus aplicaciones y datos a través de las zonas de disponibilidad para protegerlos de los puntos únicos de fallo. Con las zonas de disponibilidad, Azure ofrece el mejor acuerdo de nivel de servicio (SLA) del sector con un 99,99% de tiempo de actividad de las máquinas. El SLA completo de Azure explica la disponibilidad garantizada de Azure en su conjunto.
+      Los servicios de **zone-redundant** replican sus aplicaciones y datos a través de las zonas de disponibilidad para protegerlos de los puntos únicos de fallo. Con las zonas de disponibilidad, Azure ofrece el mejor acuerdo de nivel de servicio (SLA) del sector con un 99,99% de tiempo de actividad de las máquinas. El SLA completo de Azure explica la disponibilidad garantizada de Azure en su conjunto.
 
-Las puertas de enlace de **zone-redundant** y las puertas de enlace de zona se basan en el recurso de IP pública de Azure SKU estándar. La configuración del recurso de IP pública de Azure determina si la puerta de enlace que implementa es redundante por zonas o zonal.
+      Las puertas de enlace de **zone-redundant** y las puertas de enlace de zona se basan en el recurso de IP pública de Azure SKU estándar. La configuración del recurso de IP pública de Azure determina si la puerta de enlace que implementa es redundante por zonas o zonal.
 
 11. **¿Cuál es el propósito del _Network Security Group_?**
 
-    **Propósito: Línea de defensa en la seguridad de nuestros recursos en Azure.**
+      **Propósito: Línea de defensa en la seguridad de nuestros recursos en Azure.**
 
-- Filtra el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure.
-- Contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante hacia, o el tráfico de red saliente desde, varios tipos de recursos de Azure.
+      - Filtra el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure.
+      - Contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante hacia, o el tráfico de red saliente desde, varios tipos de recursos de Azure.
 
 12. **Informe de newman 1 (Punto 2)**
 13. **Presente el Diagrama de Despliegue de la solución.**
