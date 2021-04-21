@@ -154,31 +154,30 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 5.  **Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.**
    
-   **B1ls**
-   <!DOCTYPE html>
-   <html>
-       <head></head>
-       <body>
-           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B1ls.png" alt="ER" width="800"/>
-       </body>
-   </html>
+      **B1ls**
+      <!DOCTYPE html>
+      <html>
+          <head></head>
+          <body>
+              <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B1ls.png" alt="ER" width="800"/>
+          </body>
+      </html>
+
+      **B2ms**
+       <!DOCTYPE html>
+      <html>
+          <head></head>
+          <body>
+              <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B2ms.png" alt="ER" width="800"/>
+          </body>
+      </html>
    
-   **B2ms**
-    <!DOCTYPE html>
-   <html>
-       <head></head>
-       <body>
-           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B2ms.png" alt="ER" width="800"/>
-       </body>
-   </html>
-   
-   En cada petición la función consume gran parte de recursos de la CPU debido a que se realizan varias cálculos innecesarios, además de que no se implementa concurrencia lo que    hace que se consuman más recursos y el tiempo de respuesta sea mayor.
+      En cada petición la función consume gran parte de recursos de la CPU debido a que se realizan varias cálculos innecesarios, además de que no se implementa concurrencia lo       que hace que se consuman más recursos y el tiempo de respuesta sea mayor.
    
 6. **Adjunte la imagen del resumen de la ejecución de Postman. Interprete:**
    - Tiempos de ejecución de cada petición.
    - Si hubo fallos documentelos y explique.
    
-    **B1ls**
    <!DOCTYPE html>
    <html>
        <head></head>
@@ -190,7 +189,6 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
    El tiempo promedio de ejecución para cada petición fue entre 37s-40s y se recibieron entre 1.4MB-1.99MB aproximadamente.
    Al realizar las 2 ejecuciones paralelas se evidenciaron 3 fallos en la conexión debido a que el servidor no soporta concurrencia.
    
-   **B2ms**
    <!DOCTYPE html>
    <html>
        <head></head>
@@ -215,7 +213,7 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 10. **¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?**
      
-     
+     No hubo mejora en el uso de cpu ya que el consumo fue del 7,5% en promedio comparado con el de la otra máquina que fue del 12%, esto se debe que aunque se disponen de más        recursos para hacer los cálculos la implementación propia del programa no es eficiente.
      
 11. **Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?**
     <!DOCTYPE html>
