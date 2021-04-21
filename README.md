@@ -130,17 +130,111 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
    Al realizar la conexión a la máquina virtual mediante SSH, comienza un proceso para este servicio por lo que todos los comandos ejecutados a partir de ahi crearán hilos de      dicho proceso, que terminarán en cuanto se finalice la conexión mediante SSH.
    Es necesario crear un _Inbound port rule_ en el puerto 3000 para exponer el servicio de FibonacciApp en internet y permitir el acceso externo.
    
-4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.
-5. Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.
-6. Adjunte la imagen del resumen de la ejecución de Postman. Interprete:
+4. **Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.**
+
+   **B1ls**
+   <!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/time_table_B1ls.png" alt="ER" width="800"/>
+       </body>
+   </html>
+
+   **B2ms**
+   <!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/time_table_B2ms.png" alt="ER" width="800"/>
+       </body>
+   </html>
+   
+   La función de Fibonacci tarda tanto tiempo, pues no aprovecha bien los recursos del sistema al estar implementada iterativamente y al no aprovechar los hilos de ejecución se    repiten cálculos para hallar los resultados en cada iteración que podrían ser almacenados en memoria.
+
+5.  **Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.**
+   
+   **B1ls**
+   <!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B1ls.png" alt="ER" width="800"/>
+       </body>
+   </html>
+   
+   **B2ms**
+    <!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B2ms.png" alt="ER" width="800"/>
+       </body>
+   </html>
+   
+   En cada petición la función consume gran parte de recursos de la CPU debido a que se realizan varias cálculos innecesarios, además de que no se implementa concurrencia lo que    hace que se consuman más recursos y el tiempo de respuesta sea mayor.
+   
+6. **Adjunte la imagen del resumen de la ejecución de Postman. Interprete:**
    - Tiempos de ejecución de cada petición.
    - Si hubo fallos documentelos y explique.
+   
+    **B1ls**
+   <!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_B1ls.png" alt="ER" width="800"/>
+       </body>
+   </html>
+   
+   El tiempo promedio de ejecución para cada petición fue entre 37s-40s y se recibieron entre 1.4MB-1.99MB aproximadamente.
+   Al realizar las 2 ejecuciones paralelas se evidenciaron 3 fallos en la conexión debido a que el servidor no soporta concurrencia.
+   
+   **B2ms**
+   <!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_B2ms.png" alt="ER" width="800"/>
+       </body>
+   </html>
+   
+   El tiempo promedio de ejecución para cada petición fue entre 28s-29s y se recibieron entre 1.4MB aproximadamente. 
+   Al realizar las 2 ejecuciones paralelas se evidenciaron 3 fallos en la conexión debido a que el servidor no soporta concurrencia.
+   
 7. ¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?
-8. ¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?
-9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
-10. ¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?
-11. Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?
+8. **¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?**
+   
+    Aumentar el tamaño de la máquina virtual puede significar una mejora en los tiempos de respuesta de las peticiones, pero no en la capacidad de       respuesta concurrente       del sistema (algunas peticiones aún fallan).
 
+    Cuando cambiamos el tamaño de la máquina virtual se cierra la conexión SSH por lo tanto mientras se reinicia, se pierde disponibilidad de la aplicación FibonacciApp ya que       esta deja de funcionar.
+   
+9. **¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?**
+   
+     Cuando cambia el tamaño de la máquina virtual es necesario cierrar la conexión SSH, por lo tanto la infraestructura no estará disponible, lo cual implica que todas las          peticiones generadas durante algunos minutos serán ignoradas y no se tendrán en cuenta.
+
+10. **¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?**
+     
+     
+     
+11. **Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?**
+    <!DOCTYPE html>
+    <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_p11_a.png" alt="ER" width="800"/>
+       </body>
+   </html>
+    <!DOCTYPE html>
+    <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_p11_b.png" alt="ER" width="800"/>
+       </body>
+   </html>
+   
+  El comportamiento del sistema no mejoró, un porcentaje de las peticiones sigue fallando y el tiempo de respuesta no disminuye significativamente debido a que el tamaño B2ms no   presenta mejoras notorias respecto al tamaño B1ls.
+     
 ### 📍 Parte 2 - Escalabilidad horizontal
 
 #### Crear el Balanceador de Carga
