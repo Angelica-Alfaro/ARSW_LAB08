@@ -104,16 +104,32 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 1. **¿Cuántos y cuáles recursos crea Azure junto con la VM?**
 
-Junto con la máquina virtual,Azure crea 6 recursos:
-   * Azure Storage Account
-   * Public IP Address
-   * Network Interface
-   * Virtual Network
-   * Virtual Disks
-   * Network Security Group
+   Junto con la máquina virtual,Azure crea 6 recursos:
+      * Azure Storage Account
+      * Public IP Address
+      * Network Interface
+      * Virtual Network
+      * Virtual Disks
+      * Network Security Group
   
-2. ¿Brevemente describa para qué sirve cada recurso?
-3. ¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un _Inbound port rule_ antes de acceder al servicio?
+2. **¿Brevemente describa para qué sirve cada recurso?**
+   * **Azure Storage Account:** Contiene todos los objetos de datos de Azure Storage: blobs, archivos, colas, tablas y discos. Proporciona un espacio de nombres único para sus          datos de Azure Storage al que se puede acceder desde cualquier lugar del mundo a través de HTTP o HTTPS.
+   
+   * **Public IP Address:** Permite que los recursos de Azure se comuniquen con internet y con servicios públicos de Azure, esta dirección es asignada a un recurso hasta que            este se elimine. Un recurso de dirección IP pública se puede asociar con: Interfaces de red de máquinas virtuales, balanceadores de carga orientados a Internet,                  pasarelas VPN, pasarelas de aplicación, cortafuegos Azure. 
+
+    * **Network Interface:** Permite que una máquina virtual Azure se comunique con Internet y con recursos locales.
+
+   * **Virtual Network:** Es el bloque de construcción fundamental para su red privada en Azure. Es similar a una red tradicional que operaría en su propio centro de datos, pero        trae consigo beneficios adicionales de la infraestructura de Azure, como escala, disponibilidad y aislamiento.
+   
+   * **Virtual Disks:** Permiten en almacenamiento de la máquina virtual Azure.
+   
+   * **Network Security Group:** Permite filtrar el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure. Un grupo de seguridad de red contiene reglas        de seguridad que permiten o deniegan el tráfico de red entrante o el tráfico de red saliente de varios tipos de recursos de Azure
+
+3. **¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un _Inbound port rule_ antes de acceder al servicio?**
+   
+   Al realizar la conexión a la máquina virtual mediante SSH, comienza un proceso para este servicio por lo que todos los comandos ejecutados a partir de ahi crearán hilos de      dicho proceso, que terminarán en cuanto se finalice la conexión mediante SSH.
+   Es necesario crear un _Inbound port rule_ en el puerto 3000 para exponer el servicio de FibonacciApp en internet y permitir el acceso externo.
+   
 4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.
 5. Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.
 6. Adjunte la imagen del resumen de la ejecución de Postman. Interprete:
@@ -322,6 +338,11 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 
 **Fuentes:**
 
+- https://docs.microsoft.com/es-es/learn/modules/create-linux-virtual-machine-in-azure/2-create-a-linux-virtual-machine
+- https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview
+- https://docs.microsoft.com/en-us/azure/virtual-network/public-ip-addresses
+- https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview
+- https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview
 - https://azurebrains.com/2019/02/07/azure-load-balancer/
 - https://docs.microsoft.com/en-us/azure/load-balancer/
 - https://www.hostdime.com.ar/blog/por-que-usar-un-equilibrador-de-carga-o-load-balancer/
