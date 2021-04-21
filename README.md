@@ -288,6 +288,7 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
    Una **Subnet** es un rango de direcciones IP en la VNet. Se puede dividir una VNet en varias subnets para su organización y seguridad. Cada NIC en una VM está conectada a una subred en una VNet. Las NICs conectadas a subredes (iguales o diferentes) dentro de una VNet pueden comunicarse entre sí sin ninguna configuración adicional.
 
    **Address space** de una red virtual se compone de uno o varios rangos de direcciones no superpuestos que se especifican en notación CIDR.
+   
    **Address range** debe ser especificado en notación CIDR, y no puede superponerse con otros rangos de direcciones dentro de la misma red virtual o Subnet.
 
 9. **¿Qué son las _Availability Zone_ y por qué seleccionamos 3 diferentes zonas?.**
