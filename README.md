@@ -200,7 +200,15 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
    El tiempo promedio de ejecución para cada petición fue entre 28s-29s y se recibieron entre 1.4MB aproximadamente. 
    Al realizar las 2 ejecuciones paralelas se evidenciaron 3 fallos en la conexión debido a que el servidor no soporta concurrencia.
    
-7. ¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?
+7. **¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?**
+   <!DOCTYPE html>
+    <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/differences.PNG" alt="ER" width="700"/>
+       </body>
+   </html>
+   
 8. **¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?**
    
     Aumentar el tamaño de la máquina virtual puede significar una mejora en los tiempos de respuesta de las peticiones, pero no en la capacidad de       respuesta concurrente       del sistema (algunas peticiones aún fallan).
@@ -222,16 +230,16 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
        <body>
            <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_p11_a.png" alt="ER" width="800"/>
        </body>
-   </html>
+    </html>
     <!DOCTYPE html>
     <html>
        <head></head>
        <body>
            <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_p11_b.png" alt="ER" width="800"/>
        </body>
-   </html>
+    </html>
    
-  El comportamiento del sistema no mejoró, un porcentaje de las peticiones sigue fallando y el tiempo de respuesta no disminuye significativamente debido a que el tamaño B2ms no   presenta mejoras notorias respecto al tamaño B1ls.
+     El comportamiento del sistema no mejoró, un porcentaje de las peticiones sigue fallando y el tiempo de respuesta no disminuye significativamente debido a que el tamaño B2ms      no presenta mejoras notorias respecto al tamaño B1ls.
      
 ### 📍 Parte 2 - Escalabilidad horizontal
 
