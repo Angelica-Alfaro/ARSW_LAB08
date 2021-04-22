@@ -287,7 +287,7 @@ forever start FibonacciApp.js
 
 Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, sin embargo es importante que usted sepa que existen herramientas para aumatizar este proceso, entre ellas encontramos Azure Resource Manager, OsDisk Images, Terraform con Vagrant y Paker, Puppet, Ansible entre otras.
 
-**Evidencia 3VMs creadas**
+**💡 Evidencia 3VMs creadas**
 <!DOCTYPE html>
    <html>
        <head></head>
@@ -304,7 +304,7 @@ Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, si
 http://52.155.223.248/
 http://52.155.223.248/fibonacci/1
 ```
-**Evidencia verificando servicios básicos**
+**💡 Evidencia verificando servicios básicos**
 <!DOCTYPE html>
    <html>
        <head></head>
@@ -440,8 +440,15 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
       - Filtra el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure.
       - Contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante hacia, o el tráfico de red saliente desde, varios tipos de recursos de Azure.
 
-12. **Informe de newman 1 (Punto 2): ** [Mostrar informe](https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/Informe.pdf)
+12. **Informe de newman 1 (Punto 2):** [Mostrar informe](https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/Informe.pdf)
 13. **Presente el Diagrama de Despliegue de la solución.**
+   <!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part2/Deployment.PNG" alt="loadB" width="600"/>
+       </body>
+   </html>
 
 **Fuentes:**
 
