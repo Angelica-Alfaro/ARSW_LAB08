@@ -78,7 +78,7 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 11. Una vez el cambio se vea reflejado, repita el paso 7, 8 y 9.
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
 
-      Usando este modelo de escalabilidad logramos reducir el consumo de CPU y tiempo de respuesta a las peticiones evidenciadas en la consola del browser; sin embargo aún falla nuestro servicio pues no responde con éxito a un conjunto considerable de peticiones concurrentes.
+    Usando este modelo de escalabilidad logramos reducir el consumo de CPU y tiempo de respuesta a las peticiones evidenciadas en la consola del browser; sin embargo aún falla nuestro servicio pues no responde con éxito a un conjunto considerable de peticiones concurrentes.
 
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
@@ -105,31 +105,33 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 1. **¿Cuántos y cuáles recursos crea Azure junto con la VM?**
 
    Junto con la máquina virtual,Azure crea 6 recursos:
-      * Azure Storage Account
-      * Public IP Address
-      * Network Interface
-      * Virtual Network
-      * Virtual Disks
-      * Network Security Group
-  
+
+   - Azure Storage Account
+   - Public IP Address
+   - Network Interface
+   - Virtual Network
+   - Virtual Disks
+   - Network Security Group
+
 2. **¿Brevemente describa para qué sirve cada recurso?**
-   * **Azure Storage Account:** Contiene todos los objetos de datos de Azure Storage: blobs, archivos, colas, tablas y discos. Proporciona un espacio de nombres único para sus          datos de Azure Storage al que se puede acceder desde cualquier lugar del mundo a través de HTTP o HTTPS.
-   
-   * **Public IP Address:** Permite que los recursos de Azure se comuniquen con internet y con servicios públicos de Azure, esta dirección es asignada a un recurso hasta que            este se elimine. Un recurso de dirección IP pública se puede asociar con: Interfaces de red de máquinas virtuales, balanceadores de carga orientados a Internet,                  pasarelas VPN, pasarelas de aplicación, cortafuegos Azure. 
 
-    * **Network Interface:** Permite que una máquina virtual Azure se comunique con Internet y con recursos locales.
+   - **Azure Storage Account:** Contiene todos los objetos de datos de Azure Storage: blobs, archivos, colas, tablas y discos. Proporciona un espacio de nombres único para sus datos de Azure Storage al que se puede acceder desde cualquier lugar del mundo a través de HTTP o HTTPS.
 
-   * **Virtual Network:** Es el bloque de construcción fundamental para su red privada en Azure. Es similar a una red tradicional que operaría en su propio centro de datos, pero        trae consigo beneficios adicionales de la infraestructura de Azure, como escala, disponibilidad y aislamiento.
-   
-   * **Virtual Disks:** Permiten en almacenamiento de la máquina virtual Azure.
-   
-   * **Network Security Group:** Permite filtrar el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure. Un grupo de seguridad de red contiene reglas        de seguridad que permiten o deniegan el tráfico de red entrante o el tráfico de red saliente de varios tipos de recursos de Azure
+   - **Public IP Address:** Permite que los recursos de Azure se comuniquen con internet y con servicios públicos de Azure, esta dirección es asignada a un recurso hasta que este se elimine. Un recurso de dirección IP pública se puede asociar con: Interfaces de red de máquinas virtuales, balanceadores de carga orientados a Internet, pasarelas VPN, pasarelas de aplicación, cortafuegos Azure.
+
+   - **Network Interface:** Permite que una máquina virtual Azure se comunique con Internet y con recursos locales.
+
+   - **Virtual Network:** Es el bloque de construcción fundamental para su red privada en Azure. Es similar a una red tradicional que operaría en su propio centro de datos, pero trae consigo beneficios adicionales de la infraestructura de Azure, como escala, disponibilidad y aislamiento.
+
+   - **Virtual Disks:** Permiten en almacenamiento de la máquina virtual Azure.
+
+   - **Network Security Group:** Permite filtrar el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure. Un grupo de seguridad de red contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante o el tráfico de red saliente de varios tipos de recursos de Azure
 
 3. **¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un _Inbound port rule_ antes de acceder al servicio?**
-   
-   Al realizar la conexión a la máquina virtual mediante SSH, comienza un proceso para este servicio por lo que todos los comandos ejecutados a partir de ahi crearán hilos de      dicho proceso, que terminarán en cuanto se finalice la conexión mediante SSH.
+
+   Al realizar la conexión a la máquina virtual mediante SSH, comienza un proceso para este servicio por lo que todos los comandos ejecutados a partir de ahi crearán hilos de dicho proceso, que terminarán en cuanto se finalice la conexión mediante SSH.
    Es necesario crear un _Inbound port rule_ en el puerto 3000 para exponer el servicio de FibonacciApp en internet y permitir el acceso externo.
-   
+
 4. **Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.**
 
    **B1ls**
@@ -149,35 +151,36 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
            <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/time_table_B2ms.png" alt="ER" width="800"/>
        </body>
    </html>
-   
-   La función de Fibonacci tarda tanto tiempo, pues no aprovecha bien los recursos del sistema al estar implementada iterativamente y al no aprovechar los hilos de ejecución se    repiten cálculos para hallar los resultados en cada iteración que podrían ser almacenados en memoria.
 
-5.  **Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.**
-   
-      **B1ls**
+   La función de Fibonacci tarda tanto tiempo, pues no aprovecha bien los recursos del sistema al estar implementada iterativamente y al no aprovechar los hilos de ejecución se repiten cálculos para hallar los resultados en cada iteración que podrían ser almacenados en memoria.
+
+5. **Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.**
+
+   **B1ls**
+     <!DOCTYPE html>
+     <html>
+         <head></head>
+         <body>
+             <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B1ls.png" alt="ER" width="800"/>
+         </body>
+     </html>
+
+   **B2ms**
       <!DOCTYPE html>
-      <html>
-          <head></head>
-          <body>
-              <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B1ls.png" alt="ER" width="800"/>
-          </body>
-      </html>
+     <html>
+         <head></head>
+         <body>
+             <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B2ms.png" alt="ER" width="800"/>
+         </body>
+     </html>
 
-      **B2ms**
-       <!DOCTYPE html>
-      <html>
-          <head></head>
-          <body>
-              <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/CPU_consume%20graphic_B2ms.png" alt="ER" width="800"/>
-          </body>
-      </html>
-   
-      En cada petición la función consume gran parte de recursos de la CPU debido a que se realizan varias cálculos innecesarios, además de que no se implementa concurrencia lo       que hace que se consuman más recursos y el tiempo de respuesta sea mayor.
-   
+   En cada petición la función consume gran parte de recursos de la CPU debido a que se realizan varias cálculos innecesarios, además de que no se implementa concurrencia lo que hace que se consuman más recursos y el tiempo de respuesta sea mayor.
+
 6. **Adjunte la imagen del resumen de la ejecución de Postman. Interprete:**
+
    - Tiempos de ejecución de cada petición.
    - Si hubo fallos documentelos y explique.
-   
+
    <!DOCTYPE html>
    <html>
        <head></head>
@@ -185,10 +188,10 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
            <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_B1ls.png" alt="ER" width="800"/>
        </body>
    </html>
-   
+
    El tiempo promedio de ejecución para cada petición fue entre 37s-40s y se recibieron entre 1.4MB-1.99MB aproximadamente.
    Al realizar las 2 ejecuciones paralelas se evidenciaron 3 fallos en la conexión debido a que el servidor no soporta concurrencia.
-   
+
    <!DOCTYPE html>
    <html>
        <head></head>
@@ -196,10 +199,10 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
            <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_B2ms.png" alt="ER" width="800"/>
        </body>
    </html>
-   
-   El tiempo promedio de ejecución para cada petición fue entre 28s-29s y se recibieron entre 1.4MB aproximadamente. 
+
+   El tiempo promedio de ejecución para cada petición fue entre 28s-29s y se recibieron entre 1.4MB aproximadamente.
    Al realizar las 2 ejecuciones paralelas se evidenciaron 3 fallos en la conexión debido a que el servidor no soporta concurrencia.
-   
+
 7. **¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?**
    <!DOCTYPE html>
     <html>
@@ -208,21 +211,18 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
            <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/differences.PNG" alt="ER" width="700"/>
        </body>
    </html>
-   
 8. **¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?**
-   
-    Aumentar el tamaño de la máquina virtual puede significar una mejora en los tiempos de respuesta de las peticiones, pero no en la capacidad de       respuesta concurrente       del sistema (algunas peticiones aún fallan).
 
-    Cuando cambiamos el tamaño de la máquina virtual se cierra la conexión SSH por lo tanto mientras se reinicia, se pierde disponibilidad de la aplicación FibonacciApp ya que       esta deja de funcionar.
-   
+   Aumentar el tamaño de la máquina virtual puede significar una mejora en los tiempos de respuesta de las peticiones, pero no en la capacidad de respuesta concurrente del sistema (algunas peticiones aún fallan).
+
+   Cuando cambiamos el tamaño de la máquina virtual se cierra la conexión SSH por lo tanto mientras se reinicia, se pierde disponibilidad de la aplicación FibonacciApp ya que esta deja de funcionar.
+
 9. **¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?**
-   
-     Cuando cambia el tamaño de la máquina virtual es necesario cierrar la conexión SSH, por lo tanto la infraestructura no estará disponible, lo cual implica que todas las          peticiones generadas durante algunos minutos serán ignoradas y no se tendrán en cuenta.
+
+   Cuando cambia el tamaño de la máquina virtual es necesario cerrar la conexión SSH, por lo tanto la infraestructura no estará disponible, lo cual implica que todas las peticiones generadas durante algunos minutos serán ignoradas y no se tendrán en cuenta.
 
 10. **¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?**
-     
-     No hubo mejora en el uso de cpu ya que el consumo fue del 7,5% en promedio comparado con el de la otra máquina que fue del 12%, esto se debe que aunque se disponen de más        recursos para hacer los cálculos la implementación propia del programa no es eficiente.
-     
+    No hubo mejora en el uso de cpu ya que el consumo fue del 7,5% en promedio comparado con el de la otra máquina que fue del 12%, esto se debe que aunque se disponen de más recursos para hacer los cálculos la implementación propia del programa no es eficiente.
 11. **Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?**
     <!DOCTYPE html>
     <html>
@@ -238,9 +238,9 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
            <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part1/newman_p11_b.png" alt="ER" width="800"/>
        </body>
     </html>
-   
-     El comportamiento del sistema no mejoró, un porcentaje de las peticiones sigue fallando y el tiempo de respuesta no disminuye significativamente debido a que el tamaño B2ms      no presenta mejoras notorias respecto al tamaño B1ls.
-     
+
+    El comportamiento del sistema no mejoró, un porcentaje de las peticiones sigue fallando y el tiempo de respuesta no disminuye significativamente debido a que el tamaño B2ms no presenta mejoras notorias respecto al tamaño B1ls.
+
 ### 📍 Parte 2 - Escalabilidad horizontal
 
 #### Crear el Balanceador de Carga
@@ -288,6 +288,7 @@ forever start FibonacciApp.js
 Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, sin embargo es importante que usted sepa que existen herramientas para aumatizar este proceso, entre ellas encontramos Azure Resource Manager, OsDisk Images, Terraform con Vagrant y Paker, Puppet, Ansible entre otras.
 
 **Evidencia 3VMs creadas**
+
 <!DOCTYPE html>
    <html>
        <head></head>
@@ -298,13 +299,15 @@ Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, si
       
 #### Probar el resultado final de nuestra infraestructura
 
-1. Porsupuesto el endpoint de acceso a nuestro sistema será la IP pública del balanceador de carga, primero verifiquemos que los servicios básicos están funcionando, consuma los siguientes recursos:
+1. Por supuesto el endpoint de acceso a nuestro sistema será la IP pública del balanceador de carga, primero verifiquemos que los servicios básicos están funcionando, consuma los siguientes recursos:
 
 ```
 http://52.155.223.248/
 http://52.155.223.248/fibonacci/1
 ```
+
 **Evidencia verificando servicios básicos**
+
 <!DOCTYPE html>
    <html>
        <head></head>
@@ -420,7 +423,7 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
    Una **Subnet** es un rango de direcciones IP en la VNet. Se puede dividir una VNet en varias subnets para su organización y seguridad. Cada NIC en una VM está conectada a una subred en una VNet. Las NICs conectadas a subredes (iguales o diferentes) dentro de una VNet pueden comunicarse entre sí sin ninguna configuración adicional.
 
    **Address space** de una red virtual se compone de uno o varios rangos de direcciones no superpuestos que se especifican en notación CIDR.
-   
+
    **Address range** debe ser especificado en notación CIDR, y no puede superponerse con otros rangos de direcciones dentro de la misma red virtual o Subnet.
 
 9. **¿Qué son las _Availability Zone_ y por qué seleccionamos 3 diferentes zonas?.**
@@ -429,16 +432,16 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 
 10. **¿Qué significa que una IP sea _zone-redundant_?**
 
-      Los servicios de **zone-redundant** replican sus aplicaciones y datos a través de las zonas de disponibilidad para protegerlos de los puntos únicos de fallo. Con las zonas de disponibilidad, Azure ofrece el mejor acuerdo de nivel de servicio (SLA) del sector con un 99,99% de tiempo de actividad de las máquinas. El SLA completo de Azure explica la disponibilidad garantizada de Azure en su conjunto.
+    Los servicios de **zone-redundant** replican sus aplicaciones y datos a través de las zonas de disponibilidad para protegerlos de los puntos únicos de fallo. Con las zonas de disponibilidad, Azure ofrece el mejor acuerdo de nivel de servicio (SLA) del sector con un 99,99% de tiempo de actividad de las máquinas. El SLA completo de Azure explica la disponibilidad garantizada de Azure en su conjunto.
 
-      Las puertas de enlace de **zone-redundant** y las puertas de enlace de zona se basan en el recurso de IP pública de Azure SKU estándar. La configuración del recurso de IP pública de Azure determina si la puerta de enlace que implementa es redundante por zonas o zonal.
+    Las puertas de enlace de **zone-redundant** y las puertas de enlace de zona se basan en el recurso de IP pública de Azure SKU estándar. La configuración del recurso de IP pública de Azure determina si la puerta de enlace que implementa es redundante por zonas o zonal.
 
 11. **¿Cuál es el propósito del _Network Security Group_?**
 
-      **Propósito: Línea de defensa en la seguridad de nuestros recursos en Azure.**
+    **Propósito: Línea de defensa en la seguridad de nuestros recursos en Azure.**
 
-      - Filtra el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure.
-      - Contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante hacia, o el tráfico de red saliente desde, varios tipos de recursos de Azure.
+    - Filtra el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure.
+    - Contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante hacia, o el tráfico de red saliente desde, varios tipos de recursos de Azure.
 
 12. **Informe de newman 1 (Punto 2): ** [Mostrar informe](https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/Informe.pdf)
 13. **Presente el Diagrama de Despliegue de la solución.**
