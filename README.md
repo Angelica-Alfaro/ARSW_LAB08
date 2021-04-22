@@ -247,45 +247,27 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 Antes de continuar puede eliminar el grupo de recursos anterior para evitar gastos adicionales y realizar la actividad en un grupo de recursos totalmente limpio.
 
-1. El Balanceador de Carga es un recurso fundamental para habilitar la escalabilidad horizontal de nuestro sistema, por eso en este paso cree un balanceador de carga dentro de Azure tal cual como se muestra en la imágen adjunta.
+1. El Balanceador de Carga es un recurso fundamental para habilitar la escalabilidad horizontal de nuestro sistema, por eso en este paso cree un balanceador de carga dentro de Azure.
 
-![](images/part2/part2-lb-create.png)
+2. A continuación cree un _Backend Pool_.
 
-2. A continuación cree un _Backend Pool_, guiese con la siguiente imágen.
+3. A continuación cree un _Health Probe_.
 
-![](images/part2/part2-lb-bp-create.png)
+4. A continuación cree un _Load Balancing Rule_.
 
-3. A continuación cree un _Health Probe_, guiese con la siguiente imágen.
-
-![](images/part2/part2-lb-hp-create.png)
-
-4. A continuación cree un _Load Balancing Rule_, guiese con la siguiente imágen.
-
-![](images/part2/part2-lb-lbr-create.png)
-
-5. Cree una _Virtual Network_ dentro del grupo de recursos, guiese con la siguiente imágen.
-
-![](images/part2/part2-vn-create.png)
+5. Cree una _Virtual Network_ dentro del grupo de recursos.
 
 #### Crear las maquinas virtuales (Nodos)
 
 Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar en 3 diferentes zonas de disponibilidad. Después las agregaremos al balanceador de carga.
 
-1. En la configuración básica de la VM guíese por la siguiente imágen. Es importante que se fije en la "Avaiability Zone", donde la VM1 será 1, la VM2 será 2 y la VM3 será 3.
-
-![](images/part2/part2-vm-create1.png)
+1. Siga la configuración básica de la V. Es importante que se fije en la "Avaiability Zone", donde la VM1 será 1, la VM2 será 2 y la VM3 será 3.
 
 2. En la configuración de networking, verifique que se ha seleccionado la _Virtual Network_ y la _Subnet_ creadas anteriormente. Adicionalmente asigne una IP pública y no olvide habilitar la redundancia de zona.
 
-![](images/part2/part2-vm-create2.png)
-
 3. Para el Network Security Group seleccione "avanzado" y realice la siguiente configuración. No olvide crear un _Inbound Rule_, en el cual habilite el tráfico por el puerto 3000. Cuando cree la VM2 y la VM3, no necesita volver a crear el _Network Security Group_, sino que puede seleccionar el anteriormente creado.
 
-![](images/part2/part2-vm-create3.png)
-
-4. Ahora asignaremos esta VM a nuestro balanceador de carga, para ello siga la configuración de la siguiente imágen.
-
-![](images/part2/part2-vm-create4.png)
+4. Ahora asignaremos esta VM a nuestro balanceador de carga, para ello siga la configuración.
 
 5. Finalmente debemos instalar la aplicación de Fibonacci en la VM. para ello puede ejecutar el conjunto de los siguientes comandos, cambiando el nombre de la VM por el correcto
 
@@ -305,6 +287,15 @@ forever start FibonacciApp.js
 
 Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, sin embargo es importante que usted sepa que existen herramientas para aumatizar este proceso, entre ellas encontramos Azure Resource Manager, OsDisk Images, Terraform con Vagrant y Paker, Puppet, Ansible entre otras.
 
+**Evidencia 3VMs creadas**
+<!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part2/evidencia_3VM's.png" alt="VMs" width="800"/>
+       </body>
+   </html>
+      
 #### Probar el resultado final de nuestra infraestructura
 
 1. Porsupuesto el endpoint de acceso a nuestro sistema será la IP pública del balanceador de carga, primero verifiquemos que los servicios básicos están funcionando, consuma los siguientes recursos:
@@ -313,7 +304,23 @@ Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, si
 http://52.155.223.248/
 http://52.155.223.248/fibonacci/1
 ```
-
+**Evidencia verificando servicios básicos**
+<!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part2/infra_1a.png" alt="loadB" width="800"/>
+       </body>
+   </html>
+   
+<!DOCTYPE html>
+   <html>
+       <head></head>
+       <body>
+           <img src="https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/images/part2/infra_1b.png" alt="loadB" width="800"/>
+       </body>
+   </html>
+      
 2. Realice las pruebas de carga con `newman` que se realizaron en la parte 1 y haga un informe comparativo donde contraste: tiempos de respuesta, cantidad de peticiones respondidas con éxito, costos de las 2 infraestrucruras, es decir, la que desarrollamos con balanceo de carga horizontal y la que se hizo con una maquina virtual escalada.
 
 3. Agregue una 4 maquina virtual y realice las pruebas de newman, pero esta vez no lance 2 peticiones en paralelo, sino que incrementelo a 4. Haga un informe donde presente el comportamiento de la CPU de las 4 VM y explique porque la tasa de éxito de las peticiones aumento con este estilo de escalabilidad.
@@ -433,7 +440,7 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
       - Filtra el tráfico de red hacia y desde los recursos de Azure en una red virtual de Azure.
       - Contiene reglas de seguridad que permiten o deniegan el tráfico de red entrante hacia, o el tráfico de red saliente desde, varios tipos de recursos de Azure.
 
-12. **Informe de newman 1 (Punto 2)**
+12. **Informe de newman 1 (Punto 2): ** [Mostrar informe](https://github.com/Angelica-Alfaro/ARSW_LAB08/blob/main/Informe.pdf)
 13. **Presente el Diagrama de Despliegue de la solución.**
 
 **Fuentes:**
